@@ -186,6 +186,41 @@ export function BlockAxe ({position = [0, 0, 0]}) {
     )
 }
 
+function Bounds ({ length = 1}) {
+
+    return <>
+        <RigidBody type='fixed' restitution={0.2} friction={0}>
+            <mesh 
+                geometry={boxGeometry}
+                material= {wallMaterial}
+                scale={[0.3, 1.5, 4 * length]}
+                position={[2.15, 0.75, - (length * 2) + 2]}
+                castShadow
+            />
+            <mesh 
+                geometry={boxGeometry}
+                material= {wallMaterial}
+                scale={[0.3, 1.5, 4 * length]}
+                position={[-2.15, 0.75, - (length * 2) + 2]}
+                receiveShadow
+            />
+            <mesh 
+                geometry={boxGeometry}
+                material= {wallMaterial}
+                scale={[4, 1.5, 0.3]}
+                position={[0, 0.75, - (length * 4) + 2]}
+                receiveShadow
+            />
+            <CuboidCollider 
+                args={[2, 0.1, 2 * length]} 
+                position={[0, -0.1, - (length * 2) + 2]}
+                restitution={0.2}
+                friction={1}
+            />
+        </RigidBody>
+    </>
+}
+
 export default function Level ({count = 5, types = [BlockSpinner, BlockLimbo, BlockAxe]}) {
 
     const blocks = useMemo(() => {
@@ -199,40 +234,7 @@ export default function Level ({count = 5, types = [BlockSpinner, BlockLimbo, Bl
             return blocks
         }, [count, types])
 
-    function Bounds ({ length = 1}) {
-
-        return <>
-            <RigidBody type='fixed' restitution={0.2} friction={0}>
-                <mesh 
-                    geometry={boxGeometry}
-                    material= {wallMaterial}
-                    scale={[0.3, 1.5, 4 * length]}
-                    position={[2.15, 0.75, - (length * 2) + 2]}
-                    castShadow
-                />
-                <mesh 
-                    geometry={boxGeometry}
-                    material= {wallMaterial}
-                    scale={[0.3, 1.5, 4 * length]}
-                    position={[-2.15, 0.75, - (length * 2) + 2]}
-                    receiveShadow
-                />
-                <mesh 
-                    geometry={boxGeometry}
-                    material= {wallMaterial}
-                    scale={[4, 1.5, 0.3]}
-                    position={[0, 0.75, - (length * 4) + 2]}
-                    receiveShadow
-                />
-                <CuboidCollider 
-                    args={[2, 0.1, 2 * length]} 
-                    position={[0, -0.1, - (length * 2) + 2]}
-                    restitution={0.2}
-                    friction={1}
-                />
-            </RigidBody>
-        </>
-    }
+   
 
     return <>
         <BlockStart position={[0, 0, 0]} />

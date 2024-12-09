@@ -5,15 +5,21 @@ import { Perf } from 'r3f-perf'
 import Level from './Level.jsx'
 import { Physics } from "@react-three/rapier"
 import Player from './Player.jsx'
+import useGame from './stores/useGame.jsx'
+
 
 export default function Experience()
 {
+
+    const blocks = useGame((state) => state.blocksCount)
+
+
     return <>
-    <Perf position='top-left'/>
+    {/* <Perf position='top-left'/> */}
 
     <Physics>
         <Lights />
-        <Level />
+        <Level count={blocks} />
         <Player />
     </Physics>
        
