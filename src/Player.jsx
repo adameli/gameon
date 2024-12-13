@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import useGame from "./stores/useGame";
 
 
+
 export default function Player () {
 
 
@@ -34,8 +35,24 @@ export default function Player () {
             body.current.applyImpulse({x: 0, y: 0.5, z: 0})
         
     }
+
+    const reset = () => {
+         body.current.setTranslation({x: 0, y: 1, z: 0})
+         body.current.setLinvel({x: 0, y: 0, z: 0})
+         body.current.setAngvel({x: 0, y: 0, z: 0})
+    }
     
     useEffect(() => {
+       
+        
+       useGame.subscribe(
+            (state) =>  state.phase,
+            (phase) => {
+                if(phase === 'ready')
+                    reset()
+            }
+       )
+
         const unsubscribeJump = subscribeKeys(
             (state) => state.jump, 
             (value) => {

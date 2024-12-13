@@ -11,15 +11,18 @@ import useGame from './stores/useGame.jsx'
 export default function Experience()
 {
 
-    const blocks = useGame((state) => state.blocksCount)
+    const blocksCount = useGame((state) => state.blocksCount)
+    const blocksSeed = useGame((state) => state.blocksSeed)
 
 
     return <>
     {/* <Perf position='top-left'/> */}
 
+    <color args={['#bdedfc']} attach='background' />
+
     <Physics>
         <Lights />
-        <Level count={blocks} />
+        <Level count={blocksCount} seed={blocksSeed} />
         <Player />
     </Physics>
        
